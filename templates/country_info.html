@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Country{% endblock %}}
+
+{% block content %}
+<div id="travel-bcg" class="full-width" style="background-image: url('{{ img_url }}');"></div>
+
+<h1>{{country_record['name']}}</h1>
+<h2>{{country_record['nativeName']}}</h2>
+<p>Capital: {{country_record['capital']}}</p>
+<p>Region: {{country_record['region']}}</p>
+<p>Population: {{country_record['population']}}</p>
+<p>Timezones: {{country_record['timezones']}}</p>
+<p>Languages: {{country_record['languages'][0]['name']}}</p>
+<p>Currency Code: {{country_record['currencies'][0]['code']}}</p>
+{% if g.user.id%}
+<p>
+  <a class="btn btn-primary" href="/bucketlists/{{ country_record['name'] }}/add-country">
+    Add Country To Bucketlist
+  </a>
+</p>
+{% endif %}
+<a class="pixabay-logo" href="https://pixabay.com/">
+    <img class="pixabay-logo" src="https://pixabay.com/static/img/public/leaderboard_a.png" alt="Pixabay">
+</a>
+{% endblock %}

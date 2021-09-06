@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="jumbotron">
+  <h1 id="bucketlist-header">{{ bucketlist.name }}</h1>
+  {% if bucketlist.description %}
+  <p class="lead">{{ bucketlist.description }}</p>
+  {% endif %}
+</div>
+
+<ul id="bucketlist">
+  {% for country in bucketlist.bucketlistCountry %}
+    {% if country.completed == True %}
+    <li class='done'>{{ country.country_name }}</li>
+    {% else %}
+    <li>{{ country.country_name }}</li>
+    {% endif %}
+  {% endfor %}
+  </ul>
+
+<p><a class="btn btn-primary" href="/users/{{ bucketlist.user_id }}">Back to Profile</a></p>
+
+
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}LetsGoTravel!{% endblock %}}
+
+{% block content %}
+<h1>Where would you like to go?</h1>
+<form action="/country"> 
+    <input type="text" name="country" placeholder="Enter Country">
+    <button>Let's Go!</button>
+</form>
+
+{% endblock %}
