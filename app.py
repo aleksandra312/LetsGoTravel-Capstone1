@@ -53,8 +53,7 @@ def do_logout():
 
     if CURR_USER_KEY in session:
         del session[CURR_USER_KEY]
-        
-        
+              
 
 @app.route('/signup', methods=["GET", "POST"])
 def signup():
@@ -123,8 +122,8 @@ def logout():
     return redirect("/login")
         
 ##############################################################################
-# General user routes:
-
+# General user routes:  
+    
 @app.route('/users')
 def list_users():
     """Page with listing of users.
@@ -278,6 +277,7 @@ def add_country_to_playlist(country_name):
 
 @app.route("/bucketlists/country/<country_name>/complete", methods=["POST"])
 def complete_bucketlist_item(country_name):
+    """Mark countries as completed and update the database."""
     bucketlist_name = request.json["bucketlist_name"]
     completed = bool(request.json["completed"])
         
@@ -335,3 +335,14 @@ def add_playlist():
         return render_template("bucketlist/new_bucketlist.html", form=form)   
 
 
+@app.route('/users/<bucketlist_name>/validate')
+def validate_user(bucketlist_name):  
+    """Check if logged in user has access to edit the bucketlist."""
+    bucketlist = (
+        Bucketlist.query
+            .filter_by(name=bucketlist_name).one()
+            )
+    if bucketlist.user_id != g.user.id:
+        return jsonify(status=403)
+    
+    return jsonify(status=200)

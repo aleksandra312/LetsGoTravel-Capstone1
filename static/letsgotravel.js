@@ -3,12 +3,15 @@ const bucketlistHeader = document.querySelector('#bucketlist-header');
 let countryName = '';
 let bucketlistName = '';
 
-bucketlist.addEventListener('click', function(evt) {
+bucketlist.addEventListener('click', async function(evt) {
     if (evt.target.tagName === 'LI') {
-        evt.target.classList.toggle('done');
         countryName = evt.target.innerText;
         bucketlistName = bucketlistHeader.innerText;
-        completeBucketlistCountry(evt.target.className);
+
+        if ((await validateUserAccess(bucketlistName)) == 200) {
+            evt.target.classList.toggle('done');
+            completeBucketlistCountry(evt.target.className);
+        }
     }
 });
 
@@ -18,4 +21,9 @@ async function completeBucketlistCountry(completed) {
         completed: completed
     });
     console.log(resp.data);
+}
+
+async function validateUserAccess(bucketlistName) {
+    const resp = await axios.get(`/users/${bucketlistName}/validate`);
+    return resp.data.status;
 }
