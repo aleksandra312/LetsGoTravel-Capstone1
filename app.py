@@ -4,16 +4,15 @@ from sqlalchemy.exc import IntegrityError
 from flask_sqlalchemy import SQLAlchemy
 from forms import LoginForm, RegisterForm, UserEditForm, BucketlistForm, SelectBucketlistForm
 import requests
+import os
 from models import db, connect_db, User, Bucketlist, BucketlistCountry
 
 CURR_USER_KEY = "curr_user"
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = "abc12345"
-# app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', "it's a secret")
-# app.config['SQLALCHEMY_DATABASE_URI'] = (
-#     os.environ.get('DATABASE_URL', 'postgres:///letsgotravel'))
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///letsgotravel"
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', "secret1273624")
+app.config['SQLALCHEMY_DATABASE_URI'] = (
+    os.environ.get('DATABASE_URL', "postgresql:///letsgotravel"))
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
