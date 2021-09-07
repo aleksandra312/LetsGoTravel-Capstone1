@@ -211,8 +211,6 @@ def get_country_image(country_name):
     
     pixabay_resp = requests.get(PIXABAY_API_BASE_URL, params=pixabay_params)
     data = pixabay_resp.json()
-    print('PIXABAY API RESPONSE#######')
-    print(data)
     img_url = data['hits'][0]['largeImageURL']
     
     return img_url or DEFAULT_HEADER_IMG
