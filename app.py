@@ -6,7 +6,7 @@ from forms import LoginForm, RegisterForm, UserEditForm, BucketlistForm, SelectB
 import requests
 import os
 from models import db, connect_db, User, Bucketlist, BucketlistCountry
-from config import API_SECRET_KEY
+
 
 #app config
 app = Flask(__name__)
@@ -25,7 +25,10 @@ connect_db(app)
 #API config
 COUNTRIES_API_BASE_URL = "https://restcountries.eu/rest/v2"
 PIXABAY_API_BASE_URL = "https://pixabay.com/api/"
-PIXABAY_API_KEY = os.environ.get('API_KEY', API_SECRET_KEY)
+PIXABAY_API_KEY = os.environ.get('API_KEY')
+if not PIXABAY_API_KEY:
+    from config import API_SECRET_KEY
+    PIXABAY_API_KEY = API_SECRET_KEY
 
 #app vars
 DEFAULT_HEADER_IMG = "/static/images/travel-default.webp"
