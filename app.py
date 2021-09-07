@@ -20,7 +20,6 @@ app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 debug = DebugToolbarExtension(app)
 
 connect_db(app)
-db.create_all()
 
 COUNTRIES_API_BASE_URL = "https://restcountries.eu/rest/v2"
 PIXABAY_API_BASE_URL = "https://pixabay.com/api/"
