@@ -6,9 +6,9 @@ from forms import LoginForm, RegisterForm, UserEditForm, BucketlistForm, SelectB
 import requests
 import os
 from models import db, connect_db, User, Bucketlist, BucketlistCountry
+from config import API_SECRET_KEY
 
-CURR_USER_KEY = "curr_user"
-
+#app config
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', "secret1273624")
 uri = os.environ.get("DATABASE_URL", "postgresql:///letsgotravel") 
@@ -20,14 +20,16 @@ app.config['SQLALCHEMY_ECHO'] = False
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 debug = DebugToolbarExtension(app)
-
 connect_db(app)
 
+#API config
 COUNTRIES_API_BASE_URL = "https://restcountries.eu/rest/v2"
 PIXABAY_API_BASE_URL = "https://pixabay.com/api/"
-PIXABAY_API_KEY = ""
+PIXABAY_API_KEY = os.environ.get("API_KEY", API_SECRET_KEY)
 
+#app vars
 DEFAULT_HEADER_IMG = "/static/images/travel-default.webp"
+CURR_USER_KEY = "curr_user"
 
 ##############################################################################
 # User signup/login/logout
@@ -209,6 +211,8 @@ def get_country_image(country_name):
     
     pixabay_resp = requests.get(PIXABAY_API_BASE_URL, params=pixabay_params)
     data = pixabay_resp.json()
+    print('PIXABAY API RESPONSE#######')
+    print(data)
     img_url = data['hits'][0]['largeImageURL']
     
     return img_url or DEFAULT_HEADER_IMG
