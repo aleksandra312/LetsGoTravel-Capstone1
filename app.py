@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify, g, session, flash, redirect, abort
 from flask_debugtoolbar import DebugToolbarExtension
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import IntegrityError, NoResultFound
 from flask_sqlalchemy import SQLAlchemy
 from forms import LoginForm, RegisterForm, UserEditForm, BucketlistForm, SelectBucketlistForm
 import requests
@@ -315,7 +315,7 @@ def show_bucketlist(bucketlist_id):
     
 
 @app.route("/bucketlists/add", methods=["GET", "POST"])
-def add_playlist():
+def add_bucketlist():
     """Handle add-bucketlist form:
 
     - if form not filled out or invalid: show form
@@ -325,19 +325,21 @@ def add_playlist():
     
     if form.validate_on_submit(): 
         try:
-            new_bucketlist = Bucketlist(
-                name=form.name.data,
-                description = form.description.data
-                )
-            g.user.bucketlists.append(new_bucketlist)
-            db.session.commit()
-            
-        except IntegrityError as e:
-            db.session.rollback()
+            bucketlist = (
+                Bucketlist.query
+                .filter_by(name=form.name.data,user_id=g.user.id)
+                .one())
             flash(f"Buckelist with name {form.name.data} already exists", 'danger')
             return render_template("bucketlist/new_bucketlist.html", form=form) 
         
-        return redirect(f"/users/{g.user.id}")
+        except NoResultFound as e:
+            new_bucketlist = Bucketlist(
+            name=form.name.data,
+            description = form.description.data
+            )
+            g.user.bucketlists.append(new_bucketlist)
+            db.session.commit()
+            return redirect(f"/users/{g.user.id}")
     else:
         return render_template("bucketlist/new_bucketlist.html", form=form)   
 

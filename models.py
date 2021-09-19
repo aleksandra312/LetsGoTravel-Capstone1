@@ -23,7 +23,7 @@ class Bucketlist(db.Model):
     name = db.Column(
         db.String(50), 
         nullable=False, 
-        unique=True
+        unique=False
     )
     description = db.Column(
         db.Text, 

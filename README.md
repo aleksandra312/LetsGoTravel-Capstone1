@@ -9,23 +9,23 @@ Letsgotravel is created for travelers who are looking for their next adventure. 
 ### REST APIs
 * Rest countries API
 Returns json containing information about a country.
-    URL: [https://restcountries.eu/rest/v2/name/]
-    Method: GET
-    URL Params: 
-    Required: 
-        * country=[string]
+URL: [https://restcountries.eu/rest/v2/name/]
+Method: GET
+URL Params: 
+Required: 
+    * country=[string]
 
 * Pixabay API
 Returns json containing a link to the image.
-    URL: [https://pixabay.com/api/]
-    Method: GET
-    Query Params: 
-    Required:
-        * key=[string]
-        * q=[string]
-    Optional:
-        * image_type=[string]
-        * per_page=[integer]
-        * category=[string]
+URL: [https://pixabay.com/api/]
+Method: GET
+Query Params: 
+Required:
+    * key=[string]
+    * q=[string]
+Optional:
+    * image_type=[string]
+    * per_page=[integer]
+    * category=[string]
 
 
